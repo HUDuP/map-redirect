@@ -84,11 +84,28 @@
     line.getPath().forEach(latlng => bounds.extend(latlng));
     map.fitBounds(bounds);
   }
+
+  async function loadPins(map) {
+  const response = await fetch(
+    "https://eservices-dev.thainamthip.co.th/api/odata/v3/SQL_GooglemapRerouting_dbo_StoreInfo?$select=Lat,Long"
+  );
+
+  const data = await response.json();
+
+  const markers = data.value.map(item => 
+    new google.maps.Marker({
+      position: { lat: item.Latitude, lng: item.Longitude }
+    })
+  );
+
+  new markerClusterer.MarkerClusterer({ map, markers });
+  }
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrV3Y-C0wBMMqCx7Jx6Rx_Igo2e1Z4tj4&callback=initMap" async defer></script>
 
 </body>
 </html>
+
 
 
