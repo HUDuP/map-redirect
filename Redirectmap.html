@@ -17,22 +17,32 @@
 
 <script>
   function initMap() {
-    const location = { lat: 40.7128, lng: -74.0060 }; // Example: NYC
+  const map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 13,
+    center: { lat: 15.235, lng: 104.86 } // Example coordinates near your map location
+  });
 
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 12,
-      center: location
-    });
+  const redLineCoordinates = [
+    { lat: 15.238, lng: 104.86 },
+    { lat: 15.240, lng: 104.87 },
+    { lat: 15.245, lng: 104.875 },
+    // add all points you want connected by the red line here
+  ];
 
-    new google.maps.Marker({
-      position: location,
-      map: map,
-      title: "New York City"
-    });
-  }
+  const redPolyline = new google.maps.Polyline({
+    path: redLineCoordinates,
+    geodesic: true,
+    strokeColor: "#FF0000", // red
+    strokeOpacity: 1.0,
+    strokeWeight: 4
+  });
+
+  redPolyline.setMap(map);
+}
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrV3Y-C0wBMMqCx7Jx6Rx_Igo2e1Z4tj4&callback=initMap" async defer></script>
 
 </body>
 </html>
+
