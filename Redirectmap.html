@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>Redirecting...</title>
-  <script>
-    function decodeBase64(str) {
-      try {
-        return atob(str);
-      } catch (e) {
-        return null;
-      }
+  <title>My Map</title>
+  <style>
+    #map {
+      height: 100vh; /* full screen */
+      width: 100%;
+      margin: 0;
+      padding: 0;
     }
-
-    window.onload = function() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const encoded = urlParams.get("c");
-
-      if (!encoded) {
-        document.body.innerHTML = "Missing parameter.";
-        return;
-      }
-
-      // Decode Base64 → "lat,lon"
-      const coords = decodeBase64(encoded);
-
-      if (!coords) {
-        document.body.innerHTML = "Invalid encoded value.";
-        return;
-      }
-
-      // Redirect to Google Maps
-      const gmapUrl = `https://www.google.com/maps/search/?api=1&query=${coords}`;
-      window.location.href = gmapUrl;
-    }
-  </script>
+  </style>
 </head>
 <body>
-  Redirecting...
+
+<div id="map"></div>
+
+<script>
+  function initMap() {
+    const location = { lat: 40.7128, lng: -74.0060 }; // Example: NYC
+
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 12,
+      center: location
+    });
+
+    new google.maps.Marker({
+      position: location,
+      map: map,
+      title: "New York City"
+    });
+  }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCrV3Y-C0wBMMqCx7Jx6Rx_Igo2e1Z4tj4&callback=initMap" async defer></script>
+
 </body>
 </html>
